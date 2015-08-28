@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="/bootstrap-3.3.5-dist/css/bootstrap.css">
+	<script src="/bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+		<table class="table">
+				<caption>留言板</caption>
+				<thead>
+					<tr>name</tr>
+					<tr>delete</tr>
+					<tr>message</tr>
+					<tr>time</tr>
+				</thead>	
+				<% if not @message_vector.nil? %>
+				<% @message_vector.each do |m| %>
+					<% user = User.find(m.user_id) %>
+		</table>
+		<tbody>
+			<tr>
+				<td><%= user.name %></td>
+				<td>
+					<% if !session['username'].nil? && User.find(m.user_id).name == session['username'] %>
+					<form method="post" action="/delete/<%= m.id %>">
+							<button class="btn btn-warning" type="sumbit">delete</button>
+					</form>
+				</td>
+				<td><%= m.content %></td>
+				<td>
+						<% time = m.created_at.localtime %>
+						<%= time.strtime("%Y-%m-%d %H:%M:%S") %>
+				</td>
+			</tr>
+		</tbody>
+</body>
+</html>
+<% end %>
+<% end %>

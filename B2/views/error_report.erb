@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>注册错误报告</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" href="/bootstrap-3.3.5-dist/css/bootstrap.css">
+		<script src="/bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+		<% if not @success %>
+		<h1 class="text-warning">注册失败,有<%= @error.length %>个错误</h1>
+		<table class="table">
+				<thead>
+						<tr>
+								<th>#</th>
+								<th>error</th>
+						</tr>
+				</thead>
+				<tbody>
+				<% @error.each do |err| %>
+						<tr class="danger">
+								<th>*</th>
+								<th><%= err %></th>
+						</tr>
+				</tbody>
+		</table>
+		<% end %>
+		<% end %>
+</body>
+</html>

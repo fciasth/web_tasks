@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<a href="/" class="btn btn-large btn-primary ">home</a>
+<form class="add" method="post" action="/add">
+		<div class="form-group">
+				<textarea class="form-control" rows="3" placeholder="不得少于十个字"></textarea>
+		</div>
+		<button type="submit" class="btn btn-primary">添加</button>
+</form>
+<div class="error">
+		<%= @error %>
+</div>
+<body>
+
+</body>
+</html>
