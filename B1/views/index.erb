@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class>
+<head>
+	<mata charset="UTF-8">
+	<title>Welcome to my message board</title>
+</head>
+<body>
+	<form action="/add">
+		<input type="button" value="add message">
+	</form>
+	<form action="">
+	<fieldset>
+		<legend>inqure</legend>
+		<select name="key">
+			<option value="id">ID</option>
+			<option value="author">Author</option>
+		</select>
+		<input type="text" name='val'>
+		<input type="button" value="inqure">
+	</fieldset>
+	</form>
+	<% if @vector.is_a?(String) %>
+		<h3><%= @vector %></h3>
+	<% elsif @vector.is_a?(Data) %>
+	<table border="1">
+		<tr>
+			<th>author</th>
+			<td><%= @vector.getAuthor %></td>
+		</tr>
+		<tr>
+			<th>ID</th>
+			<td><%= @vector.getId %></td>
+		</tr>
+		<tr>
+			<th>Edit time</th>
+			<td><%= @vector.get_Created_at %></td>
+		</tr>
+		<tr>
+			<th>message</th>
+			<td><%=@vector.getMessage %></td>
+		</tr>
+		<tr>
+			<th><form action="/edit/<%= @vector.getId %>"method = "post">
+			<input type="sumbit" value="To edit the message again"></form></th>
+			<td><form action="/delete/<%= @vector.getId %>">
+			<input type="sumbit" value="Delete this message"></form></td>
+		</tr>
+	</table>
+	<% else %>
+	<% @vector.each do |i| %>
+			<table border="1">
+		<tr>
+			<th>author</th>
+			<td><%= i.getAuthor %></td>
+		</tr>
+		<tr>
+			<th>ID</th>
+			<td><%= i.getId %></td>
+		</tr>
+		<tr>
+			<th>Edit time</th>
+			<td><%= i.get_Created_at %></td>
+		</tr>
+		<tr>
+			<th>message</th>
+			<td><%=i.getMessage %></td>
+		</tr>
+		<tr>
+			<th><form action="/edit/<%= i.getId %>"method = "post">
+			<input type="sumbit" value="To edit the message again"></form></th>
+			<td><form action="/delete/<%= i.getId %>">
+			<input type="sumbit" value="Delete this message"></form></td>
+		</tr>
+	</table>
+	<% end %>
+	<% end %>
+</body>
+</html>
