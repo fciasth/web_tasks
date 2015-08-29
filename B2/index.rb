@@ -1,20 +1,23 @@
-require "mysql2"
+# encoding: utf-8
+
+require 'mysql2'
 require 'sinatra'
+Dir.chdir(File.dirname(__FILE__))
 require 'active_record'
 require 'erb'
 require './lib/userData.rb'
-require './lib/mesages.rb'
+require './lib/message.rb'
 
-use Rack::Session::pool, :expire_after => 120 #session的过期时间为120秒，登录成功后120秒内无操作，session失效
+use Rack::Session::Pool, :expire_after => 120 #session的过期时间为120秒，登录成功后120秒内无操作，session失效
 
 #connection
 
 ActiveRecord::Base.establish_connection(
 	:adapter => "mysql2",
 	:host => "127.0.0.1",
-	:database => "web_task",
 	:username => "fciasth",
-	:password => "2015@"
+	:password => "2015@",
+	:database => "root"
 	)
 
 configure do
@@ -28,14 +31,14 @@ get '/' do
 	value = params['value']
 	if type.nil?||type.empty?||value.nil?||value.empty?
 		@message_vector = Message.all.order(created_at: :DESC)
-	elsif type = 'id'
+	elsif type == 'id'
 		m = Message.find(value)
 		if not m.nil?
 			@message_vector<<m
 		else
 			@error = "没有此id的留言"
 		end
-	elsif type = 'author'
+	elsif type == 'author'
 		userData.all.each do |user|
 			if user.name.include?(value)
 				Message.where(user_id: user.id).order(created_at: :DESC).each do |m|
