@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'mysql2'
 require 'sinatra'
 Dir.chdir(File.dirname(__FILE__))
@@ -7,6 +5,7 @@ require 'active_record'
 require 'erb'
 require './lib/userData.rb'
 require './lib/message.rb'
+require 'sass'
 
 use Rack::Session::Pool, :expire_after => 120 #session的过期时间为120秒，登录成功后120秒内无操作，session失效
 
@@ -15,8 +14,8 @@ use Rack::Session::Pool, :expire_after => 120 #session的过期时间为120秒�
 ActiveRecord::Base.establish_connection(
 	:adapter => "mysql2",
 	:host => "127.0.0.1",
-	:username => "fciasth",
-	:password => "2015@",
+	:username => "root",
+	:password => "zxh1345828274",
 	:database => "root"
 	)
 
@@ -141,4 +140,8 @@ end
 
 error do
 	return status
+end
+
+after do
+	ActiveRecord::Base.clear_active_connections!
 end
