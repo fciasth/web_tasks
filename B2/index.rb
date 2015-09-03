@@ -5,7 +5,6 @@ require 'active_record'
 require 'erb'
 require './lib/userData.rb'
 require './lib/message.rb'
-require 'sass'
 
 use Rack::Session::Pool, :expire_after => 120 #session的过期时间为120秒，登录成功后120秒内无操作，session失效
 
@@ -46,9 +45,12 @@ get '/' do
 			end
 		end
 		if not @message_vector.nil?
+
+		else
 			@error = "没有此author的留言"
 		end
 	end
+	erb :index
 end
 
 get '/login' do
@@ -100,7 +102,7 @@ end
 post '/relogin' do
 	if !session['name'].nil?
 		session['name'] = nil
-		session['use_id'] = nil
+		session['user_id'] = nil
 	end
 	redirect to '/'
 end
@@ -119,7 +121,7 @@ post '/add' do
 		@errors<<'留言不得少于十个字'
 	else
 		message_ = Message.new(user_id:session['user_id'],
-			message:message,
+			content:content,
 			created_at:Time.now,
 			created_at:Time.now)
 		message_.save
